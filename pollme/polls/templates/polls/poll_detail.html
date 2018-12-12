@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<h1>Poll Detail Page</h1>
+{{poll}}
+
+<form action="{%url 'polls:vote' poll.id%}" method="post">
+    {% csrf_token %}
+
+    {% for choice in poll.choice_set.all %}
+
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{choice.id}}" />
+    <label for="choice{{ forloop.counter }}">{{ choice.opcao_escolha }}</label>
+    <br />
+    {% endfor %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <input type="submit" value="Votar">
+
+</form>
+{% endblock %}
