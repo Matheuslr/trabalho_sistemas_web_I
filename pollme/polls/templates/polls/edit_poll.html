@@ -18,6 +18,13 @@
                     <input type="submit" value="Enviar" class='btn btn-primary'>
                     <a href="{% url 'polls:add_choice' poll.id %}" class="btn btn-warning">Adicionar opção</a>
                 </form>
+
+                <h3 class="text-center">Opções</h3>
+                {% for choice in poll.choice_set.all %}
+                   <p><a href="{% url 'polls:edit_choice' choice.id %}" ><i class="fas fa-edit"></i>{{choice.opcao_escolha}}</a></p> 
+                       
+                    {% endfor %}
+
             </div>
         </div>
     </div>
