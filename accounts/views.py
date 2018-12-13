@@ -40,6 +40,7 @@ def user_registration(request):
             user = User.objects.create_user(username,email = email,password = password)
             messages.success(request,'Obrigado por se registrar {}'.format(user.username))
             return redirect('accounts:login')
+    
     else:
         form = UserRegistrationForm()
     return render(request, 'accounts/register.html', {'form': form})

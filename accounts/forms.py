@@ -23,7 +23,7 @@ class UserRegistrationForm(forms.Form):
         email = self.cleaned_data['email']
         qs = User.objects.filter(email = email)
         if qs.exists():
-            raise ValidationError("Email já registrado")
+            raise ValidationError("Email já registrado, digite outro email!")
         return email
 
     
@@ -34,4 +34,10 @@ class UserRegistrationForm(forms.Form):
         
         if p1 and p2 :
             if p1 != p2: 
-                raise ValidationError('As senhas são diferentes')
+                raise ValidationError('As senhas não combinam, tente novamente!')
+    
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username__iexact=username).exists():
+            raise forms.ValidationError('Usuário já existe, tente outro usuário!')
+        return username
