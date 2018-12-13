@@ -9,7 +9,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 
-from .models import Choice, Poll
+from .models import Choice, Poll, Vote
 from .forms import PollForm, EditPollForm, ChoiceForm
 
 
@@ -20,6 +20,7 @@ def polls_list(request):
     polls = Poll.objects.all()
     context = {'polls': polls}
     return render(request, 'polls/polls_list.html', context)
+
 
 @login_required
 def add_poll(request):
@@ -47,6 +48,7 @@ def add_poll(request):
     context = {'form': form}
     return render(request, 'polls/add_poll.html', context)
 
+
 @login_required
 def edit_poll(request, poll_id):
 
@@ -65,6 +67,25 @@ def edit_poll(request, poll_id):
         form = EditPollForm(instance=poll)
 
     return render(request, 'polls/edit_poll.html', {'form':form, 'poll':poll})
+
+
+@login_required
+def delete_poll(request, poll_id):
+    poll = get_object_or_404(Poll, id=poll_id)
+    if request.user != poll.autor:
+        return redirect('/')
+
+    if request.method == 'POST':
+        poll.delete()
+        messages.success(
+                        request,
+                        'Poll Deleted Successfully',
+                        extra_tags='alert alert-success alert-dismissible fade show'
+                        )
+        return redirect('polls:list')
+
+    return render(request, 'polls/delete_poll_confirm.html', {'poll': poll})
+
 
 @login_required
 def add_choice(request, poll_id):
@@ -86,6 +107,8 @@ def add_choice(request, poll_id):
 
     return render(request, 'polls/add_choice.html', {'form':form})
 
+
+@login_required
 def edit_choice(request, choice_id):
 
     choice = get_object_or_404(Choice, id = choice_id)
@@ -107,7 +130,26 @@ def edit_choice(request, choice_id):
     else:
         form = ChoiceForm(instance=choice)
 
-    return render(request, 'polls/add_choice.html', {'form':form, 'edit_mode': True})
+    return render(request, 'polls/add_choice.html', {'form':form, 'edit_mode': True, 'choice':choice})
+
+
+@login_required
+def delete_choice(request, choice_id):
+    choice = get_object_or_404(Choice, id=choice_id)
+    poll = get_object_or_404(Poll, id=choice.poll.id)
+    if request.user != poll.autor:
+        return redirect('/')
+
+    if request.method == 'POST':
+        choice.delete()
+        messages.success(
+                        request,
+                        'Choice Deleted Successfully',
+                        extra_tags='alert alert-success alert-dismissible fade show'
+                        )
+        return redirect('polls:list')
+
+    return render(request, 'polls/delete_choice_confirm.html', {'choice': choice})
 
 
 @login_required
@@ -116,20 +158,31 @@ def polls_detail(request, poll_id):
 
     #poll = Poll.objects.get(id = poll_id)
     poll = get_object_or_404(Poll, id = poll_id)
-    context = {'poll':poll}
+    user_can_vote = poll.user_can_vote(request.user)
+    results = poll.get_results_dict()
+    context = {'poll':poll, 'user_can_vote': user_can_vote, 'results' : results}
     return render(request, 'polls/poll_detail.html', context)
+
 
 @login_required
 def poll_vote(request, poll_id):
 
     poll = get_object_or_404(Poll, id = poll_id)
+    
+    if not poll.user_can_vote(request.user):
+        messages.error(request, 'Você já votou!')
+        return HttpResponseRedirect(reverse("polls:detail", args=(poll_id,)))
+
     choice_id = request.POST.get('choice', None)
     if choice_id:
         choice = Choice.objects.get(id = choice_id)
-        choice.votos += 1
-        choice.save()
+        new_vote = Vote(user=request.user, poll = poll, choice=choice)
+        new_vote.save()
+       # choice.votos += 1
+        # choice.save()
 
     else:
         messages.error(request, 'No choice was found')
         return HttpResponseRedirect(reverse("polls:detail", args=(poll_id,)))
-    return render(request, 'polls/poll_results.html', {'poll':poll})
+    return redirect('polls:detail', poll_id = poll_id)
+

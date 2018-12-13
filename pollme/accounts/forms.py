@@ -26,20 +26,7 @@ class UserRegistrationForm(forms.Form):
             raise ValidationError("Email já registrado")
         return email
 
-    # def clean_password1(self):
-    #     p1 = self.cleaned_data['password']
-    #     p2 = self.cleaned_data['password1']
-    #     if p1 != p2:
-    #         raise ValidationError('As senhas são diferentes!')
-    #     return p1
     
-    # def clean_password2(self):
-    #     p1 = self.cleaned_data['password']
-    #     p2 = self.cleaned_data['password1']
-    #     if p1 != p2:
-    #         raise ValidationError('As senhas são diferentes!')
-    #     return p2
-
     def clean(self):
         cleaned_data = super().clean()
         p1 = cleaned_data.get('password')
