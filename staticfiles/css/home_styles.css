@@ -6,7 +6,9 @@ body{
     background-image: url('../img/photo-1540910419892-4a36d2c3266c.jpeg');
     background-repeat: no-repeat;
     background-size: cover;
-    overflow:hidden
+    overflow:hidden;
+    width: auto;
+    height: auto;
 }
 
 #home-content{
@@ -15,3 +17,9 @@ body{
  
 
 }
+
+@media only screen and (max-width: 600px) {
+    body {
+        background-image: none !important;
+    }
+  }
