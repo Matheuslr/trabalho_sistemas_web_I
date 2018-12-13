@@ -25,7 +25,7 @@ SECRET_KEY = '1u&(%15g+i@@2m%1lc&g#bm-v!js4kh)oeiq94nlejx8d(!s1g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['pollme-ufop.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
