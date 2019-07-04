@@ -11,7 +11,13 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-from .local_settings import * 
+
+ENGINE = 'django.db.backends.mysql'
+NAME = 's3aFGqptsm'
+USER = 's3aFGqptsm'
+PASSWORD = '1GOMlyBsFc'
+HOST = 'remotemysql.com'   # Or an IP Address that your DB is hosted on
+PORT = '3306'
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -85,12 +91,12 @@ WSGI_APPLICATION = 'pollme.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': local_settings.ENGINE, 
-        'NAME': local_settings.NAME,
-        'USER': local_settings.USER,
-        'PASSWORD': local_settings.PASSWORD,
-        'HOST': local_settings.HOST,   # Or an IP Address that your DB is hosted on
-        'PORT': local_settings.PORT,
+        'ENGINE': ENGINE, 
+        'NAME': NAME,
+        'USER': USER,
+        'PASSWORD': PASSWORD,
+        'HOST': HOST,   # Or an IP Address that your DB is hosted on
+        'PORT': PORT
     }
 }
 
