@@ -25,5 +25,5 @@
 
 ### 4. Referências
 
-- [DjangoDoc](https://docs.djangoproject.com/en/2.2/)
+- [Documentação do Django](https://docs.djangoproject.com/en/2.2/)
 
