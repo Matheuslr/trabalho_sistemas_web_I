@@ -3,7 +3,7 @@
 
 ### Resumo
 
-    O objetivo do trabalho é criar uma plataforma de votação, desenvolvido em Django. 
+    O objetivo do trabalho é criar uma plataforma de votação, desenvolvido em Django. Foi utilizado como base o tutorial do Django e desenvolvido novas funcionalidades 
 
 ### 1. Tema
 
