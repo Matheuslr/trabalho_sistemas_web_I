@@ -13,15 +13,15 @@
     
     O projeto terá as seguintes funcionalidades:
 
-        - Criação de usuário
-        - CRUD das votações
-        - Votação única por usuário
+    - Criação de usuário
+    - CRUD das votações
+    - Votação única por usuário
 
 ### 3. Restrição
     
     Neste trabalho não será considerado:
 
-        - Segurança ao armazenar dados do usuário
+    - Segurança ao armazenar dados do usuário
 
 ### 4. Referências
 
