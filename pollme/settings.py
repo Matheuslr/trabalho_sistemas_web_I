@@ -12,11 +12,18 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+# ENGINE = 'django.db.backends.mysql'
+# NAME = 's3aFGqptsm'
+# USER = 's3aFGqptsm'
+# PASSWORD = '1GOMlyBsFc'
+# HOST = 'remotemysql.com'   # Or an IP Address that your DB is hosted on
+# PORT = '3306'
+
 ENGINE = 'django.db.backends.mysql'
-NAME = 's3aFGqptsm'
-USER = 's3aFGqptsm'
-PASSWORD = '1GOMlyBsFc'
-HOST = 'remotemysql.com'   # Or an IP Address that your DB is hosted on
+NAME = 'pollme'
+USER = 'root'
+PASSWORD = 'password'
+HOST = '127.0.0.1'   
 PORT = '3306'
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)

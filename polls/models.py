@@ -11,7 +11,7 @@ class Poll(models.Model):
         return self.texto        
     def user_can_vote(self, user):
         """
-        Retorna False se o usuário já tiver votado em um votacao, caso contrário, retorna Falso
+        Retorna False se o usuário já tiver votado em um votacao, caso contrário, retorna True
         """
 
         user_votes = user.vote_set.all()
